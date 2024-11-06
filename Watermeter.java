@@ -81,4 +81,42 @@ public class Watermeter {
         warmWater[indexYear][monthIndex] = 0;
         System.out.println("The reading for "+month+" "+year+" has been erased.");
     }
+
+    public void showReading(int year, String month){
+        month = month.toLowerCase();
+        int indexYear = yearIndex(year);
+        Integer monthIndex = months.get(month);
+
+        //check if the month and year are valid
+        if(indexYear <0 || indexYear >=coldWater.length || monthIndex ==null){
+            System.out.println("The month is not valid.");
+            return;
+        }
+
+        //check if there already exists a reading for that month and year
+        if(coldWater[indexYear][monthIndex] ==0 && warmWater[indexYear][monthIndex]==0){
+            System.out.println("Doesn't exist a reading for "+month+" "+year+".");
+            return;
+        }
+
+        int previousYearIndex = monthIndex == 0 ? indexYear - 1 : indexYear;
+        int previousMonthIndex = monthIndex == 0 ? 11 : monthIndex - 1;
+
+        if(previousYearIndex < 0 || (coldWater[previousYearIndex][previousMonthIndex] == 0 && warmWater[previousYearIndex][previousMonthIndex]== 0 )){
+            System.out.println("Doesn't exist a reading for the previous month.");
+            return;
+        }
+
+        int currentColdWater = coldWater[indexYear][monthIndex];
+        int currentWarmWater = warmWater[indexYear][monthIndex];
+        int previousColdWater = coldWater[previousYearIndex][previousMonthIndex];
+        int preiousWarmWater = warmWater[previousYearIndex][previousMonthIndex];
+
+        int coldWaterIntake = currentColdWater - previousColdWater;
+        int warmWaterIntake = currentWarmWater - preiousWarmWater;
+
+        System.out.println("Intake for "+month+" "+year);
+        System.out.println("Cold water: previous month = "+previousColdWater +", current month = "+currentColdWater+" intake = "+coldWaterIntake);
+        System.out.println("Warm water: previous month = "+preiousWarmWater +", current month = "+currentWarmWater+" intake = "+warmWaterIntake);
+    }
 }
