@@ -63,4 +63,22 @@ public class Watermeter {
         warmWater[indexYear][monthIndex] = warmWaterReading;
         System.out.println("The reading for "+month+" "+year+" has been added.");
     }
+
+    //method to delete an existing reading
+    public void deleteReading(int year, String month){
+        month = month.toLowerCase();
+        int indexYear = yearIndex(year);
+        Integer monthIndex = months.get(month);
+
+        //check if the month and year are valid
+        if(indexYear<0 || indexYear >=coldWater.length || monthIndex ==null){
+            System.out.println("The month is not valid.");
+            return;
+        }
+
+        //if there is a reading for that month and year , delete it
+        coldWater[indexYear][monthIndex] = 0;
+        warmWater[indexYear][monthIndex] = 0;
+        System.out.println("The reading for "+month+" "+year+" has been erased.");
+    }
 }
