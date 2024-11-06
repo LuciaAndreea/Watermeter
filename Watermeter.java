@@ -1,5 +1,6 @@
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Scanner;
 
 public class Watermeter {
     //add a bidimesional array to stock the readings for the last 2 years
@@ -116,7 +117,47 @@ public class Watermeter {
         int warmWaterIntake = currentWarmWater - preiousWarmWater;
 
         System.out.println("Intake for "+month+" "+year);
-        System.out.println("Cold water: previous month = "+previousColdWater +", current month = "+currentColdWater+" intake = "+coldWaterIntake);
-        System.out.println("Warm water: previous month = "+preiousWarmWater +", current month = "+currentWarmWater+" intake = "+warmWaterIntake);
+        System.out.println("Cold water: previous month = "+previousColdWater +", current month = "+currentColdWater+", intake = "+coldWaterIntake);
+        System.out.println("Warm water: previous month = "+preiousWarmWater +", current month = "+currentWarmWater+", intake = "+warmWaterIntake);
+    }
+
+    public static void main(String[] args) {
+        Watermeter watermeter = new Watermeter();
+        Scanner scanner = new Scanner(System.in);
+
+        while(true){
+            System.out.println("\n1. Add reading\n2. Delete reading\n3. Display intake\n4. Exit");
+            System.out.println("Choose an option: ");
+            int option = scanner.nextInt();
+
+            if(option ==4){
+                System.out.println("Exit the program -----");
+                break;
+            }
+
+            System.out.println("Enter the year (eg 2023): ");
+            int year = scanner.nextInt();
+            System.out.println("Enter the month(eg jan,feb,etc..): ");
+            String month = scanner.next();
+
+            switch (option){
+                case 1:
+                    System.out.println("Enter the reading for cold water: ");
+                    int coldWater = scanner.nextInt();
+                    System.out.println("Enter the reading for warm water: ");
+                    int warmWater = scanner.nextInt();
+                    watermeter.addReading(year, month , coldWater , warmWater);
+                    break;
+                case 2:
+                    watermeter.deleteReading(year , month);
+                    break;
+                case 3:
+                    watermeter.showReading(year , month);
+                    break;
+                default:
+                    System.out.println("Invalid option.");
+            }
+        }
+        scanner.close();
     }
 }
